@@ -14,6 +14,7 @@ import {
   Wrench,
   Bell,
   BadgeCheck,
+  Cpu,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -28,6 +29,7 @@ const navItems = [
   { label: 'Live Pulse', icon: Activity, href: '/' },
   { label: 'System Nodes', icon: Terminal, href: '/status' },
   { label: 'Infrastructure', icon: Server, href: '/infrastructure' },
+  { label: 'Resources', icon: Cpu, href: '/resources' },
   { label: 'Incident Timeline', icon: History, href: '/incidents' },
   { label: 'Maintenance', icon: Wrench, href: '/maintenance' },
   { label: 'Subscribe', icon: Bell, href: '/subscribe' },
