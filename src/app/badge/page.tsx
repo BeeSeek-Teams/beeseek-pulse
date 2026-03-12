@@ -8,6 +8,7 @@ export default function BadgePage() {
   const [copied, setCopied] = useState<string | null>(null);
   const backendUrl = process.env.NEXT_PUBLIC_API_URL || '';
   const badgeUrl = `${backendUrl}/status/badge.svg`;
+  const previewUrl = '/api/backend/status/badge.svg';
 
   const snippets = [
     {
@@ -62,11 +63,11 @@ export default function BadgePage() {
         <div className="flex justify-center items-center gap-4 py-8">
           <div className="bg-background rounded-2xl p-8 border border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={badgeUrl} alt="BeeSeek Status Badge" className="h-5" />
+            <img src={previewUrl} alt="BeeSeek Status Badge" className="h-5" />
           </div>
           <div className="bg-white rounded-2xl p-8 border border-border">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={badgeUrl} alt="BeeSeek Status Badge" className="h-5" />
+            <img src={previewUrl} alt="BeeSeek Status Badge" className="h-5" />
           </div>
         </div>
         <p className="text-xs text-grey-500">Badge updates every 30 seconds with live status</p>
