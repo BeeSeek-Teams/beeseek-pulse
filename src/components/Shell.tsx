@@ -15,6 +15,7 @@ import {
   Bell,
   BadgeCheck,
   Cpu,
+  ScrollText,
 } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -32,6 +33,7 @@ const navItems = [
   { label: 'Resources', icon: Cpu, href: '/resources' },
   { label: 'Incident Timeline', icon: History, href: '/incidents' },
   { label: 'Maintenance', icon: Wrench, href: '/maintenance' },
+  { label: 'Live Logs', icon: ScrollText, href: '/logs' },
   { label: 'Subscribe', icon: Bell, href: '/subscribe' },
   { label: 'Status Badge', icon: BadgeCheck, href: '/badge' },
 ];

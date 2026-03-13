@@ -10,7 +10,7 @@ const BACKEND_URL = () => process.env.BACKEND_INTERNAL_URL || 'http://localhost:
 async function proxyRequest(
   request: NextRequest,
   { params }: { params: Promise<{ path: string[] }> },
-  method: 'GET' | 'POST' = 'GET'
+  method: 'GET' | 'POST' | 'DELETE' = 'GET'
 ) {
   const { path } = await params;
   const targetPath = path.join('/');
@@ -81,4 +81,11 @@ export async function POST(
   context: { params: Promise<{ path: string[] }> }
 ) {
   return proxyRequest(request, context, 'POST');
+}
+
+export async function DELETE(
+  request: NextRequest,
+  context: { params: Promise<{ path: string[] }> }
+) {
+  return proxyRequest(request, context, 'DELETE');
 }
