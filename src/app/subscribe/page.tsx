@@ -35,19 +35,19 @@ export default function SubscribePage() {
   };
 
   return (
-    <div className="space-y-8 text-foreground max-w-2xl mx-auto">
+    <div className="space-y-6 sm:space-y-8 text-foreground max-w-2xl mx-auto">
       <div className="text-center">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          className="inline-flex p-4 bg-primary/10 rounded-3xl mb-6"
+          className="inline-flex p-3 sm:p-4 bg-primary/10 rounded-2xl sm:rounded-3xl mb-4 sm:mb-6"
         >
-          <Bell size={40} className="text-primary" />
+          <Bell size={28} className="sm:w-10 sm:h-10 text-primary" />
         </motion.div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
           Status <span className="text-primary">Notifications</span>
         </h1>
-        <p className="text-grey-500 font-medium mt-2">
+        <p className="text-grey-500 font-medium mt-2 text-sm sm:text-base">
           Get notified when BeeSeek experiences incidents or scheduled maintenance
         </p>
       </div>
@@ -55,29 +55,29 @@ export default function SubscribePage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-surface rounded-3xl border border-border p-8"
+        className="bg-surface rounded-2xl sm:rounded-3xl border border-border p-5 sm:p-8"
       >
-        <form onSubmit={handleSubscribe} className="space-y-6">
+        <form onSubmit={handleSubscribe} className="space-y-4 sm:space-y-6">
           <div>
-            <label className="text-sm font-bold text-grey-500 uppercase tracking-wider mb-2 block">
+            <label className="text-xs sm:text-sm font-bold text-grey-500 uppercase tracking-wider mb-2 block">
               Email Address
             </label>
             <div className="relative">
-              <Mail size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-grey-500" />
+              <Mail size={18} className="sm:w-5 sm:h-5 absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-grey-500" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
                 required
-                className="w-full bg-background border border-border rounded-xl px-12 py-4 text-foreground placeholder:text-grey-500/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                className="w-full bg-background border border-border rounded-xl px-10 sm:px-12 py-3 sm:py-4 text-sm sm:text-base text-foreground placeholder:text-grey-500/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
               />
             </div>
           </div>
           <button
             type="submit"
             disabled={status === 'loading'}
-            className="w-full bg-primary text-background font-bold py-4 rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50"
+            className="w-full bg-primary text-background font-bold py-3 sm:py-4 rounded-xl hover:bg-primary/90 transition-colors disabled:opacity-50 text-sm sm:text-base"
           >
             {status === 'loading' ? 'Subscribing...' : 'Subscribe to Updates'}
           </button>
@@ -87,10 +87,10 @@ export default function SubscribePage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-6 p-4 bg-success/10 border border-success/20 rounded-xl flex items-center gap-3"
+            className="mt-4 sm:mt-6 p-3 sm:p-4 bg-success/10 border border-success/20 rounded-xl flex items-center gap-2 sm:gap-3"
           >
-            <CheckCircle size={20} className="text-success shrink-0" />
-            <p className="text-sm font-medium text-success">{message}</p>
+            <CheckCircle size={18} className="sm:w-5 sm:h-5 text-success shrink-0" />
+            <p className="text-xs sm:text-sm font-medium text-success">{message}</p>
           </motion.div>
         )}
 
@@ -98,26 +98,26 @@ export default function SubscribePage() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-6 p-4 bg-error/10 border border-error/20 rounded-xl flex items-center gap-3"
+            className="mt-4 sm:mt-6 p-3 sm:p-4 bg-error/10 border border-error/20 rounded-xl flex items-center gap-2 sm:gap-3"
           >
-            <ShieldCheck size={20} className="text-error shrink-0" />
-            <p className="text-sm font-medium text-error">{message}</p>
+            <ShieldCheck size={18} className="sm:w-5 sm:h-5 text-error shrink-0" />
+            <p className="text-xs sm:text-sm font-medium text-error">{message}</p>
           </motion.div>
         )}
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         {[
           { title: 'Incident Alerts', desc: 'Get immediate notifications when services go down', Icon: AlertTriangle, color: 'text-error' },
           { title: 'Maintenance Notices', desc: 'Know about planned downtime in advance', Icon: Wrench, color: 'text-warning' },
           { title: 'Resolution Updates', desc: 'Stay informed as issues are investigated and resolved', Icon: CheckCircle2, color: 'text-success' },
         ].map((item) => (
-          <div key={item.title} className="bg-surface rounded-2xl border border-border p-5 text-center">
-            <div className="flex justify-center mb-3">
-              <item.Icon size={24} className={item.color} />
+          <div key={item.title} className="bg-surface rounded-xl sm:rounded-2xl border border-border p-4 sm:p-5 text-center">
+            <div className="flex justify-center mb-2 sm:mb-3">
+              <item.Icon size={20} className={`sm:w-6 sm:h-6 ${item.color}`} />
             </div>
-            <h3 className="font-bold text-sm text-foreground">{item.title}</h3>
-            <p className="text-xs text-grey-500 mt-1">{item.desc}</p>
+            <h3 className="font-bold text-xs sm:text-sm text-foreground">{item.title}</h3>
+            <p className="text-[10px] sm:text-xs text-grey-500 mt-1">{item.desc}</p>
           </div>
         ))}
       </div>

@@ -113,17 +113,17 @@ function StatCard({
   const TrendIcon = trend === 'up' ? TrendingUp : trend === 'down' ? TrendingDown : Minus;
   const trendColor = trend === 'up' ? 'text-warning' : trend === 'down' ? 'text-success' : 'text-grey-500';
   return (
-    <div className="bg-surface rounded-2xl border border-border p-4">
-      <div className="flex items-center justify-between mb-2">
-        <div className="flex items-center gap-2">
-          <Icon size={16} className={color} />
-          <span className="text-xs font-bold text-grey-500 uppercase tracking-wider">{label}</span>
+    <div className="bg-surface rounded-xl sm:rounded-2xl border border-border p-3 sm:p-4">
+      <div className="flex items-center justify-between mb-1 sm:mb-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <Icon size={14} className={`sm:w-4 sm:h-4 ${color}`} />
+          <span className="text-[10px] sm:text-xs font-bold text-grey-500 uppercase tracking-wider">{label}</span>
         </div>
-        {trend && <TrendIcon size={14} className={trendColor} />}
+        {trend && <TrendIcon size={12} className={`sm:w-[14px] sm:h-[14px] ${trendColor}`} />}
       </div>
       <div className="flex items-baseline gap-1">
-        <span className="text-2xl font-bold text-foreground">{value}</span>
-        <span className="text-xs text-grey-500">{unit}</span>
+        <span className="text-xl sm:text-2xl font-bold text-foreground">{value}</span>
+        <span className="text-[10px] sm:text-xs text-grey-500">{unit}</span>
       </div>
     </div>
   );
@@ -178,23 +178,23 @@ export default function ResourcesPage() {
   return (
     <div className="space-y-6 text-foreground">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
             Resource <span className="text-primary">Monitor</span>
           </h1>
-          <p className="text-grey-500 text-sm mt-1">
+          <p className="text-grey-500 text-xs sm:text-sm mt-1">
             CPU, memory &amp; heap usage — live from the backend process
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {/* Time range picker */}
-          <div className="flex bg-surface rounded-xl border border-border overflow-hidden">
+          <div className="flex bg-surface rounded-lg sm:rounded-xl border border-border overflow-hidden">
             {[1, 6, 24].map((h) => (
               <button
                 key={h}
                 onClick={() => setHours(h)}
-                className={`px-3 py-1.5 text-xs font-bold transition-colors ${
+                className={`px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-bold transition-colors ${
                   hours === h
                     ? 'bg-primary text-background'
                     : 'text-grey-500 hover:text-foreground'
@@ -206,9 +206,9 @@ export default function ResourcesPage() {
           </div>
           <button
             onClick={fetchData}
-            className="p-2 rounded-xl bg-surface border border-border text-grey-500 hover:text-primary transition-colors"
+            className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-surface border border-border text-grey-500 hover:text-primary transition-colors"
           >
-            <RefreshCw size={16} className={loading ? 'animate-spin' : ''} />
+            <RefreshCw size={14} className={`sm:w-4 sm:h-4 ${loading ? 'animate-spin' : ''}`} />
           </button>
         </div>
       </div>
@@ -231,7 +231,7 @@ export default function ResourcesPage() {
       )}
 
       {/* Live stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <StatCard
           label="CPU Usage"
           value={latest ? latest.cpuPercent.toFixed(1) : '—'}
@@ -268,14 +268,14 @@ export default function ResourcesPage() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-surface rounded-3xl border border-border p-6"
+        className="bg-surface rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6"
       >
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 mb-3 sm:mb-4">
           <div className="flex items-center gap-2">
-            <Cpu size={18} className="text-primary" />
-            <h2 className="font-bold text-foreground">CPU Usage</h2>
+            <Cpu size={16} className="sm:w-[18px] sm:h-[18px] text-primary" />
+            <h2 className="font-bold text-sm sm:text-base text-foreground">CPU Usage</h2>
           </div>
-          <span className="text-xs text-grey-500">Last {hours}h • % utilization</span>
+          <span className="text-[10px] sm:text-xs text-grey-500">Last {hours}h • % utilization</span>
         </div>
         <MiniAreaChart
           data={data}
@@ -283,31 +283,31 @@ export default function ResourcesPage() {
           color="#FFD60A"
           maxVal={100}
           unit="%"
-          height={200}
+          height={160}
         />
       </motion.div>
 
       {/* Memory Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-surface rounded-3xl border border-border p-6"
+          className="bg-surface rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0 mb-3 sm:mb-4">
             <div className="flex items-center gap-2">
-              <MemoryStick size={18} className="text-info" />
-              <h2 className="font-bold text-foreground">RSS Memory</h2>
+              <MemoryStick size={16} className="sm:w-[18px] sm:h-[18px] text-info" />
+              <h2 className="font-bold text-sm sm:text-base text-foreground">RSS Memory</h2>
             </div>
-            <span className="text-xs text-grey-500">Total process memory</span>
+            <span className="text-[10px] sm:text-xs text-grey-500">Total process memory</span>
           </div>
           <MiniAreaChart
             data={data}
             valueKey="rssMB"
             color="#007AFF"
             unit="MB"
-            height={180}
+            height={150}
           />
         </motion.div>
 
@@ -315,21 +315,21 @@ export default function ResourcesPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-surface rounded-3xl border border-border p-6"
+          className="bg-surface rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6"
         >
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-0 mb-3 sm:mb-4">
             <div className="flex items-center gap-2">
-              <HardDrive size={18} className="text-warning" />
-              <h2 className="font-bold text-foreground">Heap Usage</h2>
+              <HardDrive size={16} className="sm:w-[18px] sm:h-[18px] text-warning" />
+              <h2 className="font-bold text-sm sm:text-base text-foreground">Heap Usage</h2>
             </div>
-            <span className="text-xs text-grey-500">V8 heap used vs total</span>
+            <span className="text-[10px] sm:text-xs text-grey-500">V8 heap used vs total</span>
           </div>
           <MiniAreaChart
             data={data}
             valueKey="heapUsedMB"
             color="#FF9F0A"
             unit="MB"
-            height={180}
+            height={150}
           />
         </motion.div>
       </div>
@@ -340,18 +340,18 @@ export default function ResourcesPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-surface rounded-3xl border border-border p-6"
+          className="bg-surface rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6"
         >
-          <h2 className="font-bold text-foreground mb-4">Period Summary</h2>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
+          <h2 className="font-bold text-sm sm:text-base text-foreground mb-3 sm:mb-4">Period Summary</h2>
+          <div className="overflow-x-auto -mx-4 sm:mx-0">
+            <table className="w-full text-xs sm:text-sm min-w-[400px]">
               <thead>
-                <tr className="text-grey-500 text-xs uppercase tracking-wider border-b border-border">
-                  <th className="text-left py-2 pr-4">Metric</th>
-                  <th className="text-right py-2 px-4">Current</th>
-                  <th className="text-right py-2 px-4">Average</th>
-                  <th className="text-right py-2 px-4">Peak</th>
-                  <th className="text-right py-2 pl-4">Min</th>
+                <tr className="text-grey-500 text-[10px] sm:text-xs uppercase tracking-wider border-b border-border">
+                  <th className="text-left py-2 pr-2 sm:pr-4 pl-4 sm:pl-0">Metric</th>
+                  <th className="text-right py-2 px-2 sm:px-4">Current</th>
+                  <th className="text-right py-2 px-2 sm:px-4">Average</th>
+                  <th className="text-right py-2 px-2 sm:px-4">Peak</th>
+                  <th className="text-right py-2 pl-2 sm:pl-4 pr-4 sm:pr-0">Min</th>
                 </tr>
               </thead>
               <tbody className="text-foreground">

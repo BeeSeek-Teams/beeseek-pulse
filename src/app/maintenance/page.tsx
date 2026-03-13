@@ -51,31 +51,31 @@ export default function MaintenancePage() {
   const past = windows.filter(w => w.status === 'Completed' || w.status === 'Cancelled');
 
   return (
-    <div className="space-y-8 text-foreground">
+    <div className="space-y-6 sm:space-y-8 text-foreground">
       <div>
-        <h1 className="text-3xl font-bold text-white tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
           Scheduled <span className="text-primary">Maintenance</span>
         </h1>
-        <p className="text-grey-500 font-medium">
+        <p className="text-grey-500 font-medium text-sm sm:text-base">
           Planned maintenance windows and service disruptions
         </p>
       </div>
 
       {/* Upcoming */}
       <section>
-        <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-          <Wrench size={20} className="text-primary" /> Upcoming & Active
+        <h2 className="text-base sm:text-lg font-bold text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+          <Wrench size={18} className="sm:w-5 sm:h-5 text-primary" /> Upcoming & Active
         </h2>
         {upcoming.length === 0 ? (
-          <div className="bg-surface rounded-3xl border border-border p-12 text-center">
-            <CheckCircle size={48} className="text-success/30 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-foreground">No Maintenance Scheduled</h3>
-            <p className="text-grey-500 font-medium mt-2">
+          <div className="bg-surface rounded-2xl sm:rounded-3xl border border-border p-6 sm:p-12 text-center">
+            <CheckCircle size={36} className="sm:w-12 sm:h-12 text-success/30 mx-auto mb-3 sm:mb-4" />
+            <h3 className="text-lg sm:text-xl font-bold text-foreground">No Maintenance Scheduled</h3>
+            <p className="text-grey-500 font-medium mt-2 text-sm">
               All systems are operating normally with no planned downtime.
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {upcoming.map((w, i) => {
               const styles = getStatusStyles(w.status);
               const StatusIcon = styles.icon;
@@ -85,24 +85,24 @@ export default function MaintenancePage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="bg-surface rounded-3xl border border-border p-6"
+                  className="bg-surface rounded-2xl sm:rounded-3xl border border-border p-4 sm:p-6"
                 >
-                  <div className="flex justify-between items-start">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-3">
                     <div>
-                      <h3 className="text-lg font-bold text-foreground">{w.title}</h3>
-                      <p className="text-sm text-grey-500 mt-1">{w.description}</p>
+                      <h3 className="text-base sm:text-lg font-bold text-foreground">{w.title}</h3>
+                      <p className="text-xs sm:text-sm text-grey-500 mt-1">{w.description}</p>
                     </div>
-                    <span className={`flex items-center gap-2 ${styles.bg} ${styles.text} px-4 py-2 rounded-full text-xs font-bold`}>
-                      <StatusIcon size={14} /> {w.status}
+                    <span className={`flex items-center gap-1.5 sm:gap-2 ${styles.bg} ${styles.text} px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-[10px] sm:text-xs font-bold w-fit`}>
+                      <StatusIcon size={12} className="sm:w-3.5 sm:h-3.5" /> {w.status}
                     </span>
                   </div>
-                  <div className="flex items-center gap-6 mt-4 text-sm text-grey-500">
-                    <div className="flex items-center gap-2">
-                      <CalendarDays size={14} />
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-6 mt-3 sm:mt-4 text-xs sm:text-sm text-grey-500">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <CalendarDays size={12} className="sm:w-3.5 sm:h-3.5" />
                       <span>{new Date(w.scheduledStart).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <Clock size={14} />
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <Clock size={12} className="sm:w-3.5 sm:h-3.5" />
                       <span>
                         {new Date(w.scheduledStart).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                         {' — '}
@@ -110,8 +110,8 @@ export default function MaintenancePage() {
                       </span>
                     </div>
                     {w.affectedServices && (
-                      <div className="flex items-center gap-2">
-                        <Server size={14} />
+                      <div className="flex items-center gap-1.5 sm:gap-2">
+                        <Server size={12} className="sm:w-3.5 sm:h-3.5" />
                         <span>{w.affectedServices}</span>
                       </div>
                     )}
@@ -126,29 +126,28 @@ export default function MaintenancePage() {
       {/* Past */}
       {past.length > 0 && (
         <section>
-          <h2 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
-            <CheckCircle size={20} className="text-success" /> Past Maintenance
+          <h2 className="text-base sm:text-lg font-bold text-foreground mb-3 sm:mb-4 flex items-center gap-2">
+            <CheckCircle size={18} className="sm:w-5 sm:h-5 text-success" /> Past Maintenance
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {past.map((w, i) => {
               const styles = getStatusStyles(w.status);
-              const StatusIcon = styles.icon;
               return (
                 <motion.div
                   key={w.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.05 }}
-                  className="bg-surface rounded-2xl border border-border p-5 opacity-60"
+                  className="bg-surface rounded-xl sm:rounded-2xl border border-border p-4 sm:p-5 opacity-60"
                 >
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
                     <div>
-                      <h3 className="font-bold text-foreground">{w.title}</h3>
-                      <p className="text-xs text-grey-500 mt-1">
+                      <h3 className="font-bold text-foreground text-sm sm:text-base">{w.title}</h3>
+                      <p className="text-[10px] sm:text-xs text-grey-500 mt-1">
                         {new Date(w.scheduledStart).toLocaleDateString()} — {w.status}
                       </p>
                     </div>
-                    <span className={`${styles.bg} ${styles.text} px-3 py-1 rounded-full text-xs font-bold`}>
+                    <span className={`${styles.bg} ${styles.text} px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[10px] sm:text-xs font-bold w-fit`}>
                       {w.status}
                     </span>
                   </div>
