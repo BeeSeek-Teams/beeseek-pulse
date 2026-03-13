@@ -70,43 +70,38 @@ export function Shell({ children }: { children: React.ReactNode }) {
         )}
       </AnimatePresence>
 
-      {/* Sidebar — hidden on mobile unless menu open */}
+      {/* Mobile Sidebar Drawer */}
       <AnimatePresence>
-        {(isSidebarOpen || isMobileMenuOpen) && (
+        {isMobileMenuOpen && (
           <motion.aside
             initial={{ x: -280 }}
-            animate={{ x: 0, width: isSidebarOpen ? 280 : 80 }}
+            animate={{ x: 0 }}
             exit={{ x: -280 }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className={cn(
-              "relative flex flex-col border-r border-border bg-surface z-50",
-              "max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:w-[280px] max-md:shadow-2xl"
-            )}
+            className="fixed inset-y-0 left-0 w-[280px] flex flex-col border-r border-border bg-surface z-50 shadow-2xl md:hidden"
           >
-            <div className="flex h-20 items-center justify-between px-6">
+            <div className="flex h-16 items-center justify-between px-5">
               <div className="flex items-center gap-3">
                 <div className="relative">
                   <div className="absolute -inset-1 rounded-full bg-primary/20 blur animate-pulse" />
-                  <Activity size={28} className="text-primary relative" />
+                  <Activity size={24} className="text-primary relative" />
                 </div>
-                <span className="text-xl font-bold text-primary tracking-tight max-md:block">
+                <span className="text-lg font-bold text-primary tracking-tight">
                   BeeSeek PULSE
                 </span>
               </div>
-              {/* Close button on mobile */}
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="rounded-lg p-2 hover:bg-white/5 transition-colors text-grey-500 md:hidden"
+                className="rounded-lg p-2 hover:bg-white/5 transition-colors text-grey-500"
               >
                 <X size={20} />
               </button>
             </div>
 
-            <nav className="flex-1 space-y-1 px-4 py-4">
+            <nav className="flex-1 space-y-1 px-3 py-4 overflow-y-auto">
               {navItems.map((item) => {
                 const isActive = pathname === item.href;
                 const Icon = item.icon;
-
                 return (
                   <Link
                     key={item.label}
@@ -118,19 +113,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
                         : "text-grey-500 hover:bg-white/5 hover:text-primary"
                     )}
                   >
-                    <Icon 
-                      size={24} 
-                      className={cn(isActive ? "text-background" : "text-grey-500 group-hover:text-primary")}
-                    />
-                    {(isSidebarOpen || isMobileMenuOpen) && (
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="ml-4 font-medium"
-                      >
-                        {item.label}
-                      </motion.span>
-                    )}
+                    <Icon size={22} className={cn(isActive ? "text-background" : "text-grey-500 group-hover:text-primary")} />
+                    <span className="ml-3 font-medium text-sm">{item.label}</span>
                   </Link>
                 );
               })}
@@ -138,6 +122,64 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </motion.aside>
         )}
       </AnimatePresence>
+
+      {/* Desktop Sidebar - always mounted, just changes width */}
+      <motion.aside
+        animate={{ width: isSidebarOpen ? 260 : 72 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+        className="hidden md:flex flex-col border-r border-border bg-surface shrink-0 overflow-hidden"
+      >
+        <div className="flex h-20 items-center px-5">
+          <div className="flex items-center gap-3">
+            <div className="relative shrink-0">
+              <div className="absolute -inset-1 rounded-full bg-primary/20 blur animate-pulse" />
+              <Activity size={28} className="text-primary relative" />
+            </div>
+            {isSidebarOpen && (
+              <motion.span
+                initial={{ opacity: 0, width: 0 }}
+                animate={{ opacity: 1, width: 'auto' }}
+                exit={{ opacity: 0, width: 0 }}
+                className="text-xl font-bold text-primary tracking-tight whitespace-nowrap overflow-hidden"
+              >
+                BeeSeek PULSE
+              </motion.span>
+            )}
+          </div>
+        </div>
+
+        <nav className="flex-1 space-y-1 px-3 py-4">
+          {navItems.map((item) => {
+            const isActive = pathname === item.href;
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                title={!isSidebarOpen ? item.label : undefined}
+                className={cn(
+                  "flex items-center rounded-xl px-3 py-3 transition-colors group",
+                  isActive 
+                    ? "bg-primary text-background shadow-lg shadow-primary/10" 
+                    : "text-grey-500 hover:bg-white/5 hover:text-primary",
+                  !isSidebarOpen && "justify-center"
+                )}
+              >
+                <Icon size={22} className={cn("shrink-0", isActive ? "text-background" : "text-grey-500 group-hover:text-primary")} />
+                {isSidebarOpen && (
+                  <motion.span
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="ml-3 font-medium text-sm whitespace-nowrap overflow-hidden"
+                  >
+                    {item.label}
+                  </motion.span>
+                )}
+              </Link>
+            );
+          })}
+        </nav>
+      </motion.aside>
 
       {/* Main Content */}
       <div className="flex flex-1 flex-col overflow-hidden">
